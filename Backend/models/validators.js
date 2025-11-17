@@ -17,12 +17,12 @@ const creditSchema = z.object({
     .max(15, "phone number should be at most 15 characters long"),
     amount: z.string({required_error: "amount is requried"})
     .trim()
-    .min(1, "phone number should be at least 1 characters long")
-    .max(15, "phone number should be at most 15 characters long"),
+    .min(1, "amount should be at least 1 characters long")
+    .max(15, "amount should be at most 15 characters long"),
     from: z.string({required_error: "From is requried"})
     .trim()
-    .min(3, "Username should be at least 3 characters long")
-    .max(40, "Username should be at most 40 characters long"),
+    .min(3, "from should be at least 3 characters long")
+    .max(40, "from should be at most 40 characters long"),
   
 })
 const DebitSchema = z.object({
@@ -41,8 +41,8 @@ const DebitSchema = z.object({
     .max(15, "phone number should be at most 15 digits"),
     amount: z.string({required_error: "Amount is requried"})
     .trim()
-    .min(1, "phone number should be at least 1 characters ")
-    .max(15, "phone number should be at most 15 characters"),
+    .min(1, "amount should be at least 1 characters ")
+    .max(15, "amount should be at most 15 characters"),
     from: z.string({required_error: "From is requried"})
     .trim()
     .min(3, "From should be at least 3 characters long")

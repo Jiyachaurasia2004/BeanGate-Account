@@ -20,7 +20,12 @@ const debitSchema = new mongoose.Schema({
     from:{
         type: String,
         required: true
+    },
+     termsAccepted: {     // <-- checkbox field
+        type: Boolean,
+        required: true,
+        default: false
     }
 },{timestamps:true})
 
-module.exports = mongoose.model('Dedit', debitSchema);
+module.exports = mongoose.model('Debit', debitSchema);

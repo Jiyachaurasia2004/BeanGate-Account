@@ -20,6 +20,11 @@ const creditSchema = new mongoose.Schema({
     from:{
         type: String,
         required: true
+    },
+     termsAccepted: {   
+        type: Boolean,
+        required: true,
+        default: false
     }
 },{timestamps:true})
 

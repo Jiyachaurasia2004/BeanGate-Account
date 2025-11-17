@@ -1,11 +1,11 @@
-const Credit = require("../models/credit")
+const Debit = require("../models/debit")
 
 const debitFrom = async(req,res)=>{
     try {
-        const {name,email,contact,amount,from} = req.body;
+        const {name,email,contact,amount,from,termsAccepted} = req.body;
 
-        const newCredit = await Credit.create({
-          name,email,contact,amount,from
+        const newCredit = await Debit.create({
+          name,email,contact,amount,from,termsAccepted
         })
         res.status(200).json({message:"Debit form submitted successfully",newCredit})
     } catch (error) {
