@@ -1,6 +1,5 @@
 "use client"
 import { useEffect, useState } from "react";
-import UserTable from "../../../components/UserTable";
 import axios from "axios";
 
 export default function UsersPage() {

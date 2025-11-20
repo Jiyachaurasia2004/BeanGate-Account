@@ -8,7 +8,7 @@ interface AuthContextType {
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export  const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 interface AuthProviderProps {
   children: ReactNode;

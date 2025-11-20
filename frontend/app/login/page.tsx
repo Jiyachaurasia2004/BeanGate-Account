@@ -6,7 +6,6 @@ import { Input } from "@heroui/input"
 import { Card } from "@heroui/card"
 import { ArrowLeft, LogIn, Mail, Lock, Shield, CheckCircle2, Zap, TrendingUp } from "lucide-react"
 import { AuthContext } from "../database/page"
-import { set } from "mongoose"
 import axios from "axios"
 import Link from "next/link"
  import {  toast } from 'react-toastify';
