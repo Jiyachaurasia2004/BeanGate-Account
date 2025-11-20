@@ -1,5 +1,6 @@
 const Credit = require("../models/credit")
 
+
 const creditFrom = async(req,res)=>{
     try {
         const {name,email,contact,amount,from,termsAccepted} = req.body;
