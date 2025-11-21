@@ -6,9 +6,10 @@ import { Input } from "@heroui/input"
 import { Card } from "@heroui/card"
 import { ArrowLeft, UserPlus, Building2, User, Mail, Phone, Lock, CheckCircle2, Shield, Zap, TrendingUp } from "lucide-react"
 import Link from "next/link"
-import { AuthContext } from "../database/page"
+
 import axios from "axios"
  import {  toast } from 'react-toastify';
+import { AuthContext } from "../../context/AuthContext"
 
 export default function SignupPage() {
   const {storeTokenInLs} = useContext(AuthContext);
