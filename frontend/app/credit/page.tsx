@@ -39,7 +39,7 @@ export default function CreditPage() {
         contact: "",
         amount: "",
         from: "",
-        termsAccepted:""
+        termsAccepted:false
       });
     } catch (error: any) {
       if (error.response?.data?.extraDetails) {

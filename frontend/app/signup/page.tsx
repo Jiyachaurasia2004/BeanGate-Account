@@ -67,7 +67,7 @@ const handleSignup = async (e: any) => {
       phone: "",
       password: "",
       confirmPassword: "",
-      termsAccepted:""
+      termsAccepted:false
     });
     setIsLoading(true);
   } catch (error: any) {

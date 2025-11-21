@@ -19,10 +19,10 @@ export  const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // ✅ localStorage को client-side पर ही access करें
   useEffect(() => {
-    const savedToken = localStorage.getItem("token");
-    if (savedToken) {
-      setToken(savedToken);
-    }
+      const storeTokenInLs = (serverToken: string) => {
+    setToken(serverToken);
+    localStorage.setItem("token", serverToken);
+  };
   }, []);
 
   const storeTokenInLs = (serverToken: string) => {
