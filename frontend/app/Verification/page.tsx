@@ -27,10 +27,13 @@ export default function Verification() {
     const email = localStorage.getItem("email") || "";
 
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/verify-otp", {
-        otp: code.join(""),
-        email: email,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/verify-otp",
+        {
+          otp: code.join(""),
+          email: email,
+        }
+      );
 
       alert("OTP Verified Successfully! You can now reset your password.");
       console.log(response.data);
@@ -50,7 +53,10 @@ export default function Verification() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 relative">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-orange-600/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
+        <div
+          className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        ></div>
         <div
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "0.5s" }}
@@ -74,7 +80,9 @@ export default function Verification() {
                 maxLength={1}
                 value={digit}
                 onChange={(e) => handleChange(e.target.value, i)}
-                ref={(el) => (inputsRef.current[i] = el)}
+                ref={(el) => {
+                  inputsRef.current[i] = el;
+                }}
                 className="w-12 h-12 text-center text-lg border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-gray-700"
                 inputMode="numeric"
                 pattern="\d*"

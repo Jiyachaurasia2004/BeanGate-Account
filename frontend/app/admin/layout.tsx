@@ -9,13 +9,12 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
- const toggleSidebar = () => setOpen(prev => !prev);
-const handleClose = () => setOpen(false);
+
+  // Sidebar toggle function
+  const toggleSidebar = () => setOpen((prev) => !prev);
 
   return (
     <div className="flex h-screen relative">
-     
-
       {/* Mobile Menu Button */}
       <button
         onClick={toggleSidebar}
@@ -40,13 +39,13 @@ const handleClose = () => setOpen(false);
           ${open ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-        <AdminSidebar  onActionComplete={handleClose}/>
+        <AdminSidebar />
       </div>
 
       {/* Main Section */}
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col">
         <AdminHeader />
-        <div className="p-6">{children}</div>
+        <div className="p-6 flex-1 overflow-auto">{children}</div>
       </div>
     </div>
   );
