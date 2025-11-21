@@ -21,7 +21,7 @@ export default function LoginPage() {
     e.preventDefault()
       try {
         setIsLoading(true);
-       const response = await axios.post(`${process.env.API_URL}/api/auth/login`, {
+       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("token")}`,

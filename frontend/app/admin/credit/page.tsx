@@ -6,7 +6,7 @@ export default function CreditPage() {
  const [credits , setCreditData] = useState([]);
   const getAllDebit = async()=>{
     try {
-        const result = await axios.get(`${process.env.API_URL}/api/admin/credit`,{
+        const result = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/credit`,{
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("token")}`,

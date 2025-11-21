@@ -6,7 +6,7 @@ export default function UsersPage() {
  const [users , setUserData] = useState([]);
   const getAllUser = async()=>{
     try {
-        const result = await axios.get(`${process.env.API_URL}/api/admin/user`,{
+        const result = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/user`,{
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -6,7 +6,7 @@ export default function DebitPage() {
  const [Debits , setDebitData] = useState([]);
   const getAllDebit = async()=>{
     try {
-        const result = await axios.get(`${process.env.API_URL}/api/admin/debit`,{
+        const result = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/debit`,{
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("token")}`,

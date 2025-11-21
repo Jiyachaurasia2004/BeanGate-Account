@@ -13,7 +13,7 @@ export default function NewPassword() {
             alert("Passwords do not match!");
         } 
     try {
-        const response = await axios.post(`${process.env.API_URL}/api/auth/reset-password`, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/reset-password`, {
              email,
              newPassword,
             confirmPassword

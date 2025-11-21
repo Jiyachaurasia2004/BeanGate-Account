@@ -27,7 +27,7 @@ export default function CreditPage() {
 
     try {
       const res = await axios.post(
-        `${process.env.API_URL}/api/form/credit`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/form/credit`,
         formData
       );
        const data = await res.data;

@@ -42,7 +42,7 @@ const handleSignup = async (e: any) => {
 
   try {
     const response = await axios.post(
-      `${process.env.API_URL}/api/auth/register`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`,
       {
         username: formData.username,
         email: formData.email,

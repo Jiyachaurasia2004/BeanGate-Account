@@ -1,5 +1,5 @@
 "use client";
-
+require("dotenv").config();
 import axios from "axios";
 import Link from "next/link";
 import { useState, useRef } from "react";
@@ -28,7 +28,7 @@ export default function Verification() {
 
     try {
       const response = await axios.post(
-        `${process.env.API_URL}/api/auth/verify-otp`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-otp`,
         {
           otp: code.join(""),
           email: email,
