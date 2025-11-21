@@ -25,7 +25,7 @@ export default function CreditPage() {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/form/debit", formData);
+      const res = await axios.post(`${process.env.API_URL}/api/form/debit`, formData);
      toast.success(res.data.message || "Credit submitted successfully!");
      const data = await res.data;
      console.log(data);

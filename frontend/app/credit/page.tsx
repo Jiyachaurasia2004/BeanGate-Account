@@ -27,7 +27,7 @@ export default function CreditPage() {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/form/credit",
+        `${process.env.API_URL}/api/form/credit`,
         formData
       );
        const data = await res.data;

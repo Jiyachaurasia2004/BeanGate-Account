@@ -42,7 +42,7 @@ const handleSignup = async (e: any) => {
 
   try {
     const response = await axios.post(
-      "http://localhost:3000/api/auth/register",
+      `${process.env.API_URL}/api/auth/register`,
       {
         username: formData.username,
         email: formData.email,

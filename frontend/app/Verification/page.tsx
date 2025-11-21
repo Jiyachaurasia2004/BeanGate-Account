@@ -28,7 +28,7 @@ export default function Verification() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/verify-otp",
+        `${process.env.API_URL}/api/auth/verify-otp`,
         {
           otp: code.join(""),
           email: email,
