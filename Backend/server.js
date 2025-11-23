@@ -10,7 +10,7 @@ const routerDebit = require('./routers/debitRouter');
 const routerAuth = require("./routers/authRouter")
 const routerAdmin = require("./routers/adminRouter")
 app.use(cors({
-    origin: 'http://localhost:3001', 
+    origin: 'https://beangate-account-websitee.onrender.com', 
     credentials: true, 
 }));
 app.use(express.json());
