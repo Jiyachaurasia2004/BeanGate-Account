@@ -96,7 +96,7 @@ function Signup() {
         </h2>
 
         <form onSubmit={handleSignup} className="space-y-4">
-          {/* Username */}
+          
           <input
             type="text"
             name="username"
@@ -107,7 +107,7 @@ function Signup() {
             className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
           />
 
-          {/* Email */}
+          
           <input
             type="email"
             name="email"
@@ -117,8 +117,6 @@ function Signup() {
             required
             className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
           />
-
-          {/* Phone */}
           <input
             type="tel"
             name="phone"
@@ -129,7 +127,6 @@ function Signup() {
             className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
           />
 
-          {/* Password */}
           <input
             type="password"
             name="password"
@@ -140,7 +137,6 @@ function Signup() {
             className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
           />
 
-          {/* Confirm Password */}
           <input
             type="password"
             name="confirmPassword"
@@ -151,7 +147,6 @@ function Signup() {
             className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
           />
 
-          {/* Terms Checkbox */}
           <label className="flex items-center gap-2 text-sm">
             <input
               type="checkbox"
@@ -175,7 +170,7 @@ function Signup() {
             </a>
           </label>
 
-          {/* Submit Button */}
+          
           <button
             type="submit"
             disabled={isLoading}
