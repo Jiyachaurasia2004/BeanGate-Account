@@ -8,14 +8,14 @@ function Home() {
    const { isLoggedIn } =useContext(AuthContext);
   return (
     <div className="h-screen relative overflow-hidden bg-gray-50">
-      {/* Background animations */}
+
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-orange-600/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "0.5s" }}></div>
       </div>
 
-      {/* Navbar */}
+      
       <nav className="w-full bg-white shadow-md py-3 px-6 flex items-center justify-between z-10 relative">
         <div className="text-2xl font-bold text-orange-600 cursor-pointer">BeanGate</div>
         <div className="flex gap-4">
@@ -47,7 +47,7 @@ function Home() {
         </div>
       </nav>
 
-      {/* Main Content */}
+
       <div className="h-screen flex flex-col items-center justify-center container mx-auto px-4 relative z-10">
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-4xl md:text-5xl font-bold text-zinc-700 mb-4 text-center">
@@ -59,9 +59,9 @@ function Home() {
           </p>
 
           <div className="flex flex-col gap-4 md:gap-6 justify-center items-center max-w-sm w-full">
-            {/* Credit / Debit Buttons */}
+            
             <div className="flex gap-2">
-              {/* CREDIT → /admin/credit */}
+              
               <Link to="/credit" className="flex-1">
                 <button className=" rounded py-3 px-2 bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-500 hover:to-orange-600 text-white font-semibold text-lg shadow-lg shadow-orange-600/40 hover:shadow-orange-600/60 transition-all flex items-center justify-center gap-3">
                   <ArrowUpCircle className="w-5 h-5 text-green-300" />
@@ -70,7 +70,6 @@ function Home() {
                 </button>
               </Link>
 
-              {/* DEBIT → /admin/debit */}
               <Link to="/debit" className="flex-1">
                 <button className=" rounded py-3 px-2 border-2 border-orange-600 text-orange-600 hover:bg-orange-600/10 font-semibold text-lg transition-all flex items-center justify-center gap-3">
                   <ArrowDownCircle className="w-5 h-5 text-red-600" />
@@ -80,7 +79,7 @@ function Home() {
               </Link>
             </div>
 
-            {/* VIEW BALANCE → /admin */}
+            
             <Link to="/admin" className="w-full">
               <button className="w-full rounded py-3 px-2 border-2 border-orange-600 text-orange-600 hover:bg-orange-600/10 font-semibold text-md transition-all flex items-center justify-center gap-3">
                 <ArrowDownCircle className="w-5 h-5 text-red-600" />
