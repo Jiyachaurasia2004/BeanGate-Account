@@ -46,18 +46,18 @@ function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 relative overflow-hidden">
-      {/* Animated Background */}
+      
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-orange-600/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "0.5s" }}></div>
       </div>
 
-      {/* Form Container */}
+      
       <div className="relative z-10 w-full max-w-xl bg-white p-8 rounded-xl shadow-lg border border-orange-300">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-700 rounded-2xl mb-4 shadow-xl shadow-orange-600/50 animate-pulse">
-            {/* Optional icon placeholder */}
+            
             <span className="text-white text-2xl font-bold">🔑</span>
           </div>
           <h2 className="text-3xl font-bold text-orange-600 mb-2">Client Login</h2>
@@ -65,7 +65,7 @@ function Login() {
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
-          {/* Email */}
+          
           <input
             type="email"
             name="email"
@@ -76,7 +76,6 @@ function Login() {
             className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
           />
 
-          {/* Password */}
           <input
             type="password"
             name="password"
@@ -87,7 +86,7 @@ function Login() {
             className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
           />
 
-          {/* Remember Me */}
+          
           <div className="flex items-center justify-between text-sm">
             <label className="flex items-center gap-2">
               <input
@@ -106,7 +105,6 @@ function Login() {
             </NavLink>
           </div>
 
-          {/* Login Button */}
           <button
             type="submit"
             disabled={isLoading}
@@ -116,7 +114,6 @@ function Login() {
           </button>
         </form>
 
-        {/* Divider */}
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-orange-600/30"></div>
@@ -126,7 +123,6 @@ function Login() {
           </div>
         </div>
 
-        {/* Register Link */}
         <Link
           to="/signup"
           className="w-full block text-center py-3 border-2 border-orange-600/50 text-orange-500 rounded-md hover:bg-orange-600/10 hover:border-orange-600 transition-all font-medium"
@@ -134,7 +130,6 @@ function Login() {
           Register Here
         </Link>
 
-        {/* Footer */}
         <div className="text-center mt-6 space-y-2 text-gray-500 text-xs">
           <p>© 2024 Beangate IT Solutions. All rights reserved.</p>
           <p>
