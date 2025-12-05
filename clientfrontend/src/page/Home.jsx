@@ -1,8 +1,11 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ArrowRight, ArrowUpCircle, ArrowDownCircle } from "lucide-react";
+import { AuthContext, useAuth } from "../context/AuthContext";
+import { useContext } from "react";
 
 function Home() {
+   const { isLoggedIn } =useContext(AuthContext);
   return (
     <div className="h-screen relative overflow-hidden bg-gray-50">
       {/* Background animations */}
@@ -16,18 +19,31 @@ function Home() {
       <nav className="w-full bg-white shadow-md py-3 px-6 flex items-center justify-between z-10 relative">
         <div className="text-2xl font-bold text-orange-600 cursor-pointer">BeanGate</div>
         <div className="flex gap-4">
-          <NavLink
-            to="/signup"
-            className="rounded bg-orange-600 text-white hover:bg-orange-700 transition-all px-4 py-2 cursor-pointer"
-          >
-            Register
-          </NavLink>
-          <NavLink
-            to="/login"
-            className="rounded border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white transition-all px-4 py-2 cursor-pointer"
-          >
-            Login
-          </NavLink>
+       {isLoggedIn ? (
+  <NavLink
+    to="/logout"
+    className="rounded bg-orange-600 text-white hover:bg-orange-700 transition-all px-4 py-2 cursor-pointer"
+  >
+    LogOut
+  </NavLink>
+) : (
+  <>
+    <NavLink
+      to="/signup"
+      className="rounded bg-orange-600 text-white hover:bg-orange-700 transition-all px-4 py-2 cursor-pointer"
+    >
+      Register
+    </NavLink>
+    <NavLink
+      to="/login"
+      className="rounded border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white transition-all px-4 py-2 cursor-pointer"
+    >
+      Login
+    </NavLink>
+  </>
+)}
+
+         
         </div>
       </nav>
 

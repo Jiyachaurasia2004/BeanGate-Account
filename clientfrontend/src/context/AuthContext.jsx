@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 // AuthProvider component
 export const AuthProvider = ({ children }) => {
-    const [token, setToken] = useState(localStorage.getItem("token") || null);
+    const [token, setToken] = useState(localStorage.getItem("token"));
     const [user, setUser] = useState(null); // Example user state
     const serverUrl = "http://localhost:3000"; // Your server URL
 
@@ -15,15 +15,13 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("token", serverToken);
     };
 
-    // Logout function
-    const LogoutToken = () => {
-        setToken(null);
-        localStorage.removeItem("token");
-        setUser(null);
-    };
-
-    const isLoggedIn = !!token;
-
+   let isLoggedIn = !!token;
+  console.log(isLoggedIn);
+  
+    const LogoutToken = ()=>{
+    setToken("")
+   return localStorage.removeItem("token");
+}
     return (
         <AuthContext.Provider value={{ isLoggedIn, LogoutToken, storeTokenInLs, user, setUser, serverUrl }}>
             {children}

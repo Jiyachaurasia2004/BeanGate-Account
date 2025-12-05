@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext";
@@ -11,7 +11,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const navigate = useNavigate()
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -20,12 +20,6 @@ function Login() {
       const response = await axios.post(
         `${serverUrl}/api/auth/login`,
         { email, password },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
       );
 
       const data = response.data;
@@ -33,6 +27,7 @@ function Login() {
       storeTokenInLs(data.token);
       setEmail("");
       setPassword("");
+      navigate("/")
     } catch (error) {
       if (
         error.response &&

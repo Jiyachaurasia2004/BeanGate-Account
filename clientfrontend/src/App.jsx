@@ -12,6 +12,8 @@ import Verification from "./page/Verification";
 import NewPassword from "./page/NewPassword";
 import Home from "./page/Home";
 import AdminUser from "./page/admin/AdminUser";
+import { LogOut } from "./page/LogOut";
+
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
           <Route path="" element={<Home />} />
           <Route path="credit" element={<Credit />} />
           <Route path="debit" element={<Debit />} />
+           <Route path="logout" element={<LogOut />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           <Route path="forget-password" element={<ForgetPassword />} />

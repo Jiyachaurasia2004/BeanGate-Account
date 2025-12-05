@@ -3,10 +3,14 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
+
  function Credit() {
  const [credits , setCreditData] = useState([]);
    const {serverUrl}  =useContext(AuthContext)
+   const [users] = useState([]);
+
   const getAllDebit = async()=>{
+   
     try {
         const result = await axios.get(`${serverUrl}/api/admin/credit`,{
         headers: {
@@ -29,6 +33,14 @@ import { AuthContext } from "../../context/AuthContext";
     getAllDebit();
   },[])
 
+  
+  if (!users || !localStorage.getItem("token")) {
+    return (
+      <div className="text-center mt-20 text-xl text-red-600">
+        Please log in to view the credit data.
+      </div>
+    );
+  }
   return    <div className="max-w-5xl mx-auto bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-orange-600/30 shadow-2xl rounded-lg shadow-orange-600/10 overflow-hidden">
    <header className="p-6 text-center  text-3xl font-bold border-b text-zinc-700">
       Admin Credit Data
