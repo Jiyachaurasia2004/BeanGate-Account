@@ -9,11 +9,14 @@ const errorHanding = require('./middleware/errorHanding');
 const routerDebit = require('./routers/debitRouter');
 const routerAuth = require("./routers/authRouter")
 const routerAdmin = require("./routers/adminRouter")
+const cookieParser = require("cookie-parser");
 app.use(cors({
-    origin: 'http://localhost:3001', 
+    origin: 'http://localhost:5173', 
     credentials: true, 
+      allowedHeaders: ["Authorization", "Content-Type"]
 }));
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api/auth",routerAuth)
 app.use("/api/form",routerCredit);
 app.use("/api/form",routerDebit);

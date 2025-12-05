@@ -1,17 +1,21 @@
 const User = require('../models/auth');
 const Credit = require('../models/credit');
 const Debit =require('../models/debit');
-const getAllUsers = async(req, res) => {
-    try {
-        const user = await User.find({},{password:0,confirmPassword: 0});
-       if(!user && user.length ===0){
-        return res.status(404).json({message: "No users found"});
-       }
-       res.status(200).json({users: user});
-    } catch (error) {
-        next(error);
+const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.find().select("-password -confirmPassword -__v");
+
+    if (users.length === 0) {
+      return res.status(404).json({ message: "No users found" });
     }
-}
+
+    res.status(200).json({ users });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 const getAllCredit= async(req, res) => {
     try {
