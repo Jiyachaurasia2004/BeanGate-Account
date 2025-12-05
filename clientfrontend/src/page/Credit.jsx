@@ -55,7 +55,7 @@ import { AuthContext } from "../context/AuthContext";
 
   return (
     <div className="min-h-screen flex flex-col justify-center container mx-auto px-4 relative">
-      {/* Background Circles */}
+      
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-orange-600/20 rounded-full blur-3xl animate-pulse"></div>
         <div
@@ -68,10 +68,8 @@ import { AuthContext } from "../context/AuthContext";
         ></div>
       </div>
 
-      {/* Grid Overlay */}
+     
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,...')] opacity-60"></div>
-
-      {/* Accent Lines */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-600 to-transparent"></div>
       <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-600 to-transparent"></div>
 
