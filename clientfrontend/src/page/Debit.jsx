@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
  function Debit() {
   const [agreedToTerms, setAgreedToTerms] = useState(false)
@@ -59,7 +60,7 @@ import { AuthContext } from "../context/AuthContext";
   };
 
   return (
-     <div className="min-h-screen flex flex-col justify-center container mx-auto px-4">
+     <div className="min-h-screen pt-6 flex flex-col justify-center container mx-auto px-4">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-orange-600/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -71,14 +72,13 @@ import { AuthContext } from "../context/AuthContext";
 
       {/* Accent Lines */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-600 to-transparent"></div>
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-600 to-transparent"></div>
-   
+    
       <h1 className="text-4xl md:text-5xl font-bold text-zinc-700 text-center mb-8">
         Beangate <span className="text-orange-600">Account</span>
       </h1>
       <div className="flex justify-center items-center">
         <form
-          className=" p-5 w-full max-w-md bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-orange-600/30 shadow-2xl rounded-lg shadow-orange-600/10"
+          className=" p-5 mb-7 w-full max-w-md bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-orange-600/30 shadow-2xl rounded-lg shadow-orange-600/10"
           onSubmit={handleSubmit}
         >
           <h1 className="text-3xl text-center font-bold mb-4">Debit Form</h1>
@@ -116,6 +116,18 @@ import { AuthContext } from "../context/AuthContext";
           >
             {isLoading ? "Submitting..." : "Submit Debit"}
           </button>
+          <div className="pt-4">
+             <p className="text-center text-sm text-gray-500">
+            Want to view your credit? Click here.{" "}
+            <Link to="/credit" className="text-orange-600 underline">
+              credit
+            </Link>
+          </p>
+             <div className="text-center mt-6 space-y-2 text-gray-500 text-xs">
+          <p>© 2024 Beangate IT Solutions. All rights reserved.</p>
+         
+        </div>
+          </div>
         </form>
       </div>
     </div>

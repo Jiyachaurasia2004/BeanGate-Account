@@ -1,25 +1,65 @@
 const mongoose = require("mongoose")
 
 const creditSchema = new mongoose.Schema({
-    name:{
-        type: String,
-        required: true 
+    date: {
+      type: Date,
+      required: true,
     },
-    email:{
-        type: String,
-        required: true 
+
+    voucherNo: {
+      type: String,
+      trim: true,
     },
-    contact:{
-        type: Number,
-        required: true 
+
+    transactionType: {
+      type: String,
+      enum: ["credit", "expense"],
+      required: true,
+      default: "credit",
     },
-    amount:{
-        type: Number,
-        required: true 
+
+    description: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    from:{
-        type: String,
-        required: true
+
+    amount: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
+    paidBy: {
+      type: String,
+      trim: true,
+    },
+
+    name: {
+      type: String,
+      trim: true,
+    },
+
+    paymentMode: {
+      type: String,
+      enum: ["cash", "upi", "bank", "card"],
+      required: true,
+    },
+
+    category: {
+      type: String,
+      required: true,
+    },
+
+    reimbursementStatus: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+
+    remarks: {
+      type: String,
+      trim: true,
     },
      termsAccepted: {   
         type: Boolean,

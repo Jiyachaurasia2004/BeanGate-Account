@@ -139,37 +139,41 @@ const handleVerifyOTP = async(req,res)=>{
   }
 }
 
-const handleResetPassword = async(req,res)=>{
+const handleResetPassword = async (req, res) => {
   try {
-    const {email,newPassword,confirmPassword} = req.body;
+    const { otp, newPassword, confirmPassword } = req.body;
 
-    // const existingOTP = await OTP.findOne({email:email,otp:otp});
-    //  if(!existingOTP || Date.now() > existingOTP.createdAt.getTime() + 60*60*1000){
-    //     res.status(400).json({success:false,message:"Invalid OTP"});
-    //     return;
-    // } 
-    const user = await User.findOne({email:email});
-    if(!user){
-        res.status(404).json({success:false,message:"User not found"});
-        return;
-    }
     if (newPassword !== confirmPassword) {
-    res.status(400).json({ success: false, message: "Passwords do not match" });
-    return;
-}
-    const hashedPassword = await bcrypt.hash(newPassword,8);
-
-    user.password = hashedPassword;
-    user.confirmPassword = hashedPassword;
+      return res.status(400).json({ success: false, message: "Passwords do not match" });
+    }
     
+   const existingOTP = await OTP.findOne({ otp: Number(otp) }); 
+if (!existingOTP) {
+    return res.status(400).json({ success: false, message: "Invalid OTP" });
+}
+
+const isExpired = Date.now() > existingOTP.createdAt.getTime() + 10 * 60 * 1000;
+if (isExpired) {
+    await OTP.deleteOne({ _id: existingOTP._id });
+    return res.status(400).json({ success: false, message: "OTP expired" });
+}
+
+    const user = await User.findOne({ email: existingOTP.email });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    user.password = await bcrypt.hash(newPassword, 8);
     await user.save();
 
-    await OTP.deleteMany({email:email});
-    res.status(200).json({success:true,message:"Password reset successfully"});
+    await OTP.deleteMany({ email: existingOTP.email });
+    res.status(200).json({ success: true, message: "Password reset successfully" });
   } catch (error) {
-     res.status(500).json({success:false,message:"internal error"})
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
-}
+};
+
+
 
  const logout = async (req, res) => {
   try {

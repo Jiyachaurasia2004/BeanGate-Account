@@ -21,28 +21,33 @@ function Verification() {
     }
   };
 
-  const handleVerify = async (e) => {
-    e.preventDefault();
-    const email = localStorage.getItem("email") || "";
+const handleVerify = async (e) => {
+  e.preventDefault();
+  const email = localStorage.getItem("email") || "";
 
-    try {
-      await axios.post(`${serverUrl}/api/auth/verify-otp`, {
-        otp: code.join(""),
-        email,
-      });
+  try {
+    await axios.post(`${serverUrl}/api/auth/verify-otp`, {
+      otp: code.join(""),
+      email,
+    });
 
-      alert("OTP Verified Successfully! You can now reset your password.");
-      setCode(["", "", "", "", "", ""]);
-      navigate("/new-password");
-    } catch (error) {
-      console.error(error);
-      if (error.response) {
-        alert(`Error: ${error.response.data.message || "Invalid OTP"}`);
-      } else {
-        alert("Network error. Try again.");
-      }
+    // Save OTP and email for the password reset page
+    localStorage.setItem("otp", code.join(""));
+    localStorage.setItem("email", email);
+
+    alert("OTP Verified Successfully! You can now reset your password.");
+    setCode(["", "", "", "", "", ""]);
+    navigate("/new-password");
+  } catch (error) {
+    console.error(error);
+    if (error.response) {
+      alert(`Error: ${error.response.data.message || "Invalid OTP"}`);
+    } else {
+      alert("Network error. Try again.");
     }
-  };
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 relative px-4">

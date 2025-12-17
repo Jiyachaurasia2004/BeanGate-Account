@@ -4,24 +4,28 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 
 function ForgetPassword() {
-  const [email, setEmail] = useState("");
-  const { serverUrl } = useContext(AuthContext);
-  const navigate = useNavigate();
+ const [email, setEmail] = useState("");
+const { serverUrl } = useContext(AuthContext);
+const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${serverUrl}/api/auth/forget-password`, { email });
-      alert(`Verification code sent to ${email}`);
-      setEmail("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    await axios.post(`${serverUrl}/api/auth/forget-password`, { email });
+    alert(`Verification code sent to ${email}`);
+    
+    // Save email to localStorage
+    localStorage.setItem("email", email);
 
-      // Navigate to verification page
-      navigate("/verification");
-    } catch (error) {
-      console.error(error);
-      alert("Error sending verification code");
-    }
-  };
+    setEmail("");
+
+    // Navigate to verification page
+    navigate("/verification");
+  } catch (error) {
+    console.error(error);
+    alert("Error sending verification code");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50 relative">

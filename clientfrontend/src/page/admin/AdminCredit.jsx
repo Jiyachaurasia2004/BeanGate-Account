@@ -1,80 +1,149 @@
-
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
+function Credit() {
+  const [credits, setCreditData] = useState([]);
+  const { serverUrl } = useContext(AuthContext);
 
- function Credit() {
- const [credits , setCreditData] = useState([]);
-   const {serverUrl}  =useContext(AuthContext)
-   const [users] = useState([]);
-
-  const getAllDebit = async()=>{
-   
+  const getAllCredit = async () => {
     try {
-        const result = await axios.get(`${serverUrl}/api/admin/credit`,{
+      const result = await axios.get(`${serverUrl}/api/admin/credit`, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-    }
-     
-    )
-    const data =  result.data;
-   
-    console.log(data);
-     setCreditData(data.credits);
+      });
+      setCreditData(result.data.credits);
     } catch (error) {
-      console.log(error)
+      console.error(error);
     }
-  
-  }
-  useEffect(()=>{
-    getAllDebit();
-  },[])
+  };
 
-  
-  if (!users || !localStorage.getItem("token")) {
+  useEffect(() => {
+    getAllCredit();
+  }, []);
+
+  if (!localStorage.getItem("token")) {
     return (
       <div className="text-center mt-20 text-xl text-red-600">
         Please log in to view the credit data.
       </div>
     );
   }
-  return    <div className="max-w-5xl mx-auto bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-orange-600/30 shadow-2xl rounded-lg shadow-orange-600/10 overflow-hidden">
-   <header className="p-6 text-center  text-3xl font-bold border-b text-zinc-700">
-      Admin Credit Data
-    </header>
- 
-  <div className="overflow-x-auto">
-    <table className="w-full border-collapse min-w-[600px] md:min-w-full">
-      <thead className="bg-gray-100 text-zinc-700">
-        <tr>
-          <th className="p-4 border-b">Name</th>
-          <th className="p-4 border-b">Email</th>
-          <th className="p-4 border-b">Phone</th>
-          <th className="p-4 border-b">Amount</th>
-          <th className="p-4 border-b">From</th>
-         
-        </tr>
-      </thead>
 
-      <tbody>
-        {Array.isArray(credits) && credits.map((curruser, index) => (
-          <tr key={index} className="text-center border-b">
-            <td className="p-4">{curruser.name}</td>
-            <td className="p-4">{curruser.email}</td>
-            <td className="p-4">{curruser.contact}</td>
-            <td className="p-4">{curruser.amount}</td>
-            <td className="p-4">{curruser.from}</td>
-           
-          </tr>
+  return (
+    <div className="max-w-7xl mx-auto">
+      <h2 className="text-3xl font-bold text-center mb-6 text-zinc-700">
+        Admin Credit Data
+      </h2>
+
+      <div className="hidden md:block bg-white rounded-xl shadow overflow-x-auto">
+        <table className="w-full border-collapse">
+          <thead className="bg-gray-100 text-zinc-700">
+            <tr>
+              <th className="p-3">Date</th>
+              <th className="p-3">Voucher</th>
+              <th className="p-3">Type</th>
+              <th className="p-3">Description</th>
+              <th className="p-3">Amount</th>
+              <th className="p-3">Paid By</th>
+              <th className="p-3">Name</th>
+              <th className="p-3">Mode</th>
+              <th className="p-3">Category</th>
+              <th className="p-3">Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {credits.map((item, index) => (
+              <tr
+                key={index}
+                className="text-center border-t hover:bg-gray-50"
+              >
+                <td className="p-3">
+                  {new Date(item.date).toLocaleDateString()}
+                </td>
+                <td className="p-3">{item.voucherNo || "-"}</td>
+                <td className="p-3 capitalize">{item.transactionType}</td>
+                <td className="p-3">{item.description}</td>
+                <td className="p-3 font-semibold">₹{item.amount}</td>
+                <td className="p-3">{item.paidBy || "-"}</td>
+                <td className="p-3">{item.name || "-"}</td>
+                <td className="p-3 uppercase">{item.paymentMode}</td>
+                <td className="p-3">{item.category}</td>
+                <td
+                  className={`p-3 font-semibold ${
+                    item.reimbursementStatus === "approved"
+                      ? "text-green-600"
+                      : item.reimbursementStatus === "rejected"
+                      ? "text-red-600"
+                      : "text-orange-600"
+                  }`}
+                >
+                  {item.reimbursementStatus || "pending"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="md:hidden space-y-4">
+        {credits.map((item, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-xl shadow p-4 space-y-1"
+          >
+            <p>
+              <span className="font-semibold">Date:</span>{" "}
+              {new Date(item.date).toLocaleDateString()}
+            </p>
+            <p>
+              <span className="font-semibold">Voucher:</span>{" "}
+              {item.voucherNo || "-"}
+            </p>
+            <p>
+              <span className="font-semibold">Type:</span>{" "}
+              {item.transactionType}
+            </p>
+            <p>
+              <span className="font-semibold">Description:</span>{" "}
+              {item.description}
+            </p>
+            <p className="font-bold text-lg">₹{item.amount}</p>
+            <p>
+              <span className="font-semibold">Paid By:</span>{" "}
+              {item.paidBy || "-"}
+            </p>
+            <p>
+              <span className="font-semibold">Name:</span>{" "}
+              {item.name || "-"}
+            </p>
+            <p>
+              <span className="font-semibold">Mode:</span>{" "}
+              {item.paymentMode}
+            </p>
+            <p>
+              <span className="font-semibold">Category:</span>{" "}
+              {item.category}
+            </p>
+            <p
+              className={`font-semibold ${
+                item.reimbursementStatus === "approved"
+                  ? "text-green-600"
+                  : item.reimbursementStatus === "rejected"
+                  ? "text-red-600"
+                  : "text-orange-600"
+              }`}
+            >
+              Status: {item.reimbursementStatus || "pending"}
+            </p>
+          </div>
         ))}
-      </tbody>
-    </table>
-  </div>
-</div>
-
-
+      </div>
+    </div>
+  );
 }
+
 export default Credit;
