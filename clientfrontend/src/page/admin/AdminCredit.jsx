@@ -54,6 +54,7 @@ function Credit() {
              
               <th className="p-3">Mode</th>
               <th className="p-3">Category</th>
+              <th className="p-3">Remarks</th>
               <th className="p-3">Status</th>
             </tr>
           </thead>
@@ -80,6 +81,7 @@ function Credit() {
              
                 <td className="p-3 uppercase">{item.paymentMode}</td>
                 <td className="p-3">{item.category}</td>
+                <td className="p-3">{item.remarks}</td>
                 <td
                   className={`p-3 font-semibold ${
                     item.reimbursementStatus === "approved"
@@ -148,6 +150,10 @@ function Credit() {
             <p>
               <span className="font-semibold">Category:</span>{" "}
               {item.category}
+            </p>
+             <p>
+              <span className="font-semibold">Remarks:</span>{" "}
+              {item.remarks}
             </p>
             <p
               className={`font-semibold ${
