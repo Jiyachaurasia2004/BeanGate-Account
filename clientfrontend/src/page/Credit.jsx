@@ -1,25 +1,40 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Credit() {
   const { serverUrl } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isLoggedIn) return; 
+
+    const hasShownAlert = localStorage.getItem("loginAlertShown");
+
+    if (!hasShownAlert) {
+      alert("Please log in to access this page.");
+      localStorage.setItem("loginAlertShown", "true");
+    }
+
+    navigate("/login");
+  }, [isLoggedIn, navigate]);
 
   const [formData, setFormData] = useState({
     date: "",
     voucherNo: "",
-    transactionType: "credit", 
+    transactionType: "credit",
     description: "",
     amount: "",
     paidBy: "",
     name: "",
     paymentMode: "",
     category: "",
-    reimbursementStatus: "pending", 
+    reimbursementStatus: "pending",
     remarks: "",
+    termsAccepted: false,
   });
 
   const handleChange = (e) => {
@@ -32,7 +47,11 @@ function Credit() {
     setIsLoading(true);
 
     try {
-      await axios.post(`${serverUrl}/api/form/credit`, formData);
+      await axios.post(`${serverUrl}/api/form/credit`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       toast.success("Transaction saved successfully!");
       setFormData({
         date: "",
@@ -50,7 +69,6 @@ function Credit() {
     } catch (error) {
       toast.error("Error submitting transaction");
       console.log(error);
-      
     } finally {
       setIsLoading(false);
     }
@@ -60,16 +78,20 @@ function Credit() {
     <div className="min-h-screen pt-7 flex flex-col justify-center container mx-auto px-4 relative">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-orange-600/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+        <div
+          className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "0.5s" }}
+        ></div>
       </div>
-
 
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjAzIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-60"></div>
 
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-600 to-transparent"></div>
-    
-    
+
       <h1 className="text-4xl md:text-5xl font-bold text-zinc-700 text-center mb-8">
         Beangate <span className="text-orange-600">Account</span>
       </h1>
@@ -79,9 +101,7 @@ function Credit() {
           onSubmit={handleSubmit}
           className="p-5 mb-8 w-full max-w-md bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-orange-600/30 shadow-2xl rounded-lg shadow-orange-600/10"
         >
-          <h1 className="text-3xl text-center font-bold mb-4">
-            Credit From
-          </h1>
+          <h1 className="text-3xl text-center font-bold mb-4">Credit From</h1>
           <input
             type="text"
             name="name"
@@ -181,7 +201,6 @@ function Credit() {
             <option value="approved">Pending</option>
             <option value="rejected">Reimbursed</option>
           </select>
-
           <textarea
             name="remarks"
             placeholder="Remarks (Optional)"
@@ -189,6 +208,21 @@ function Credit() {
             onChange={handleChange}
             className="w-full mb-4 border border-orange-400 focus:outline-orange-500 px-2 py-2 rounded"
           />
+          <label className="flex items-center mb-4">
+            <input
+              type="checkbox"
+              name="termsAccepted"
+              checked={formData.termsAccepted || false}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  termsAccepted: e.target.checked,
+                }))
+              }
+              className="mr-2"
+            />
+            I accept the terms
+          </label>
           <button
             type="submit"
             disabled={isLoading}

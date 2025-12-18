@@ -11,7 +11,7 @@ const sendEmail = require("../utils/sendEmail");
 require("dotenv").config();
 const registerUser = wrapAsync(async (req, res) => {
   try {
-    const { username, email,phone, password,confirmPassword ,termsAccepted} = req.body;
+    const { username, email,phone, password,department,post,gender,confirmPassword ,termsAccepted} = req.body;
 
     const userExist = await User.findOne({ email });
     if (userExist) {
@@ -24,6 +24,8 @@ const registerUser = wrapAsync(async (req, res) => {
       username,
       email,
       phone,
+      department,
+      gender,post,
       password: hash_password,
       confirmPassword: hash_password,
       termsAccepted
@@ -45,6 +47,9 @@ const registerUser = wrapAsync(async (req, res) => {
         username: userCreated.username,
         email: userCreated.email,
         phone: userCreated.phone,
+        department: userCreated.department,
+        post: userCreated.post,
+        gender: userCreated.gender,
          termsAccepted:userCreated.termsAccepted
       },
       token,

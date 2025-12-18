@@ -6,13 +6,16 @@ import { AuthContext } from "../context/AuthContext";
 
 function Signup() {
   const { storeTokenInLs, serverUrl } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     phone: "",
+    department: "",
+    post: "",
+    gender: "",
     password: "",
     confirmPassword: "",
   });
@@ -44,6 +47,9 @@ function Signup() {
           username: formData.username,
           email: formData.email,
           phone: formData.phone,
+          department: formData.department,
+          post: formData.post,
+          gender: formData.gender,
           password: formData.password,
           confirmPassword: formData.confirmPassword,
         },
@@ -61,11 +67,14 @@ function Signup() {
         username: "",
         email: "",
         phone: "",
+        department: "",
+        post: "",
+        gender: "",
         password: "",
         confirmPassword: "",
       });
       setAgreedToTerms(false);
-      navigate("/")
+      navigate("/");
     } catch (error) {
       if (
         error.response &&
@@ -96,7 +105,6 @@ function Signup() {
         </h2>
 
         <form onSubmit={handleSignup} className="space-y-4">
-          {/* Username */}
           <input
             type="text"
             name="username"
@@ -107,7 +115,6 @@ function Signup() {
             className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
           />
 
-          {/* Email */}
           <input
             type="email"
             name="email"
@@ -118,7 +125,6 @@ function Signup() {
             className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
           />
 
-          {/* Phone */}
           <input
             type="tel"
             name="phone"
@@ -128,8 +134,73 @@ function Signup() {
             required
             className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
           />
+          {/* Gender */}
+          <div className="w-full p-3 border-2 border-orange-300 rounded-md">
+            <p className="text-sm mb-2 text-gray-600">Gender</p>
+            <div className="flex gap-6">
+              <label className="flex items-center gap-2 text-gray-700">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  checked={formData.gender === "male"}
+                  onChange={handleChange}
+                  required
+                  className="accent-orange-600"
+                />
+                Male
+              </label>
 
-          {/* Password */}
+              <label className="flex items-center gap-2 text-gray-700">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  checked={formData.gender === "female"}
+                  onChange={handleChange}
+                  className="accent-orange-600"
+                />
+                Female
+              </label>
+
+              <label className="flex items-center gap-2 text-gray-700">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="other"
+                  checked={formData.gender === "other"}
+                  onChange={handleChange}
+                  className="accent-orange-600"
+                />
+                Other
+              </label>
+            </div>
+          </div>
+          <select
+            name="post"
+            value={formData.post}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
+          >
+            <option value="">Select Post</option>
+            <option value="Manager">Manager</option>
+            <option value="Developer">Developer</option>
+            <option value="Executive">Executive</option>
+          </select>
+          <select
+            name="department"
+            value={formData.department}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
+          >
+            <option value="">Select Department</option>
+            <option value="IT">IT</option>
+            <option value="HR">HR</option>
+            <option value="Sales">Sales</option>
+            <option value="Accounts">Accounts</option>
+          </select>
           <input
             type="password"
             name="password"
@@ -140,7 +211,6 @@ function Signup() {
             className="w-full p-3 border-2 border-orange-300 rounded-md focus:outline-none focus:border-orange-500"
           />
 
-          {/* Confirm Password */}
           <input
             type="password"
             name="confirmPassword"

@@ -42,13 +42,16 @@ function Credit() {
         <table className="w-full border-collapse">
           <thead className="bg-gray-100 text-zinc-700">
             <tr>
+               <th className="p-3">Name</th>
+                <th className="p-3">Email</th>
+                 <th className="p-3">Phone No.</th>
               <th className="p-3">Date</th>
               <th className="p-3">Voucher</th>
               <th className="p-3">Type</th>
               <th className="p-3">Description</th>
               <th className="p-3">Amount</th>
               <th className="p-3">Paid By</th>
-              <th className="p-3">Name</th>
+             
               <th className="p-3">Mode</th>
               <th className="p-3">Category</th>
               <th className="p-3">Status</th>
@@ -57,19 +60,24 @@ function Credit() {
 
           <tbody>
             {credits.map((item, index) => (
+
               <tr
                 key={index}
                 className="text-center border-t hover:bg-gray-50"
               >
+                  <td className="p-3">{item.name || "-"}</td>
+                      <td className="p-3">{item.email || "-"}</td>
+                        <td className="p-3">{item.phone || "-"}</td>
                 <td className="p-3">
                   {new Date(item.date).toLocaleDateString()}
                 </td>
+                 
                 <td className="p-3">{item.voucherNo || "-"}</td>
                 <td className="p-3 capitalize">{item.transactionType}</td>
                 <td className="p-3">{item.description}</td>
                 <td className="p-3 font-semibold">₹{item.amount}</td>
                 <td className="p-3">{item.paidBy || "-"}</td>
-                <td className="p-3">{item.name || "-"}</td>
+             
                 <td className="p-3 uppercase">{item.paymentMode}</td>
                 <td className="p-3">{item.category}</td>
                 <td
@@ -95,6 +103,18 @@ function Credit() {
             key={index}
             className="bg-white rounded-xl shadow p-4 space-y-1"
           >
+             <p>
+              <span className="font-semibold">Name:</span>{" "}
+              {item.name || "-"}
+            </p>
+             <p>
+              <span className="font-semibold">Email:</span>{" "}
+              {item.email || "-"}
+            </p>
+            <p>
+              <span className="font-semibold">Phone:</span>{" "}
+              {item.phone || "-"}
+            </p>
             <p>
               <span className="font-semibold">Date:</span>{" "}
               {new Date(item.date).toLocaleDateString()}
@@ -111,15 +131,16 @@ function Credit() {
               <span className="font-semibold">Description:</span>{" "}
               {item.description}
             </p>
-            <p className="font-bold text-lg">₹{item.amount}</p>
+            <div className="flex gap-2">
+                 <span className="font-semibold">Amount:</span>
+            <p className="font-bold text-lg"> ₹{item.amount}</p>
+            </div>
+           
             <p>
               <span className="font-semibold">Paid By:</span>{" "}
               {item.paidBy || "-"}
             </p>
-            <p>
-              <span className="font-semibold">Name:</span>{" "}
-              {item.name || "-"}
-            </p>
+           
             <p>
               <span className="font-semibold">Mode:</span>{" "}
               {item.paymentMode}

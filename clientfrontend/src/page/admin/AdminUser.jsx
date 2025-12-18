@@ -1,35 +1,31 @@
-"use client"
+"use client";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
- function User() {
- const [users , setUserData] = useState([]);
-     const {serverUrl}  =useContext(AuthContext)
-  const getAllUser = async()=>{
+function User() {
+  const [users, setUserData] = useState([]);
+  const { serverUrl } = useContext(AuthContext);
+
+  const getAllUser = async () => {
     try {
-        const result = await axios.get(`${serverUrl}/api/admin/user`,{
+      const result = await axios.get(`${serverUrl}/api/admin/user`, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-    }
-     
-    )
-    const data =  result.data;
-   
-    console.log(data);
-     setUserData(data.users);
+      });
+      setUserData(result.data.users);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  
-  }
-  useEffect(()=>{
-    getAllUser();
-  },[])
+  };
 
- if (!users || !localStorage.getItem("token")) {
+  useEffect(() => {
+    getAllUser();
+  }, []);
+
+  if (!users || !localStorage.getItem("token")) {
     return (
       <div className="text-center mt-20 text-xl text-red-600">
         Please log in to view the user data.
@@ -37,34 +33,62 @@ import { AuthContext } from "../../context/AuthContext";
     );
   }
 
-  return  (
-    <div className="w-full  mx-auto  bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-orange-600/30 shadow-2xl rounded-lg shadow-orange-600/10 overflow-hidden">
-        <header className="p-6 text-center  text-3xl font-bold border-b text-zinc-700">
-      Admin User Data
-    </header>
-      <table className="w-full border-collapse">
-        <thead className="bg-gray-100 text-zinc-700">
-          <tr>
-            <th className="p-4 border-b ">Name</th>
-            <th className="p-4 border-b">Email</th>
-            <th className="p-4 border-b">Phone</th>
-          
-          </tr>
-        </thead>
+  return (
+    <div className="w-full mx-auto bg-white rounded-xl shadow-xl p-4 sm:p-6">
+      <h1 className="text-center text-2xl sm:text-3xl font-bold mb-6 text-zinc-700">
+        Admin User Data
+      </h1>
 
-        <tbody>
-          {Array.isArray(users) && users.map((curruser, index) => (
-            <tr key={index} className="text-center border-b">
-              <td className="p-4">{curruser.username}</td>
-              <td className="p-4">{curruser.email}</td>
-              <td className="p-4">{curruser.phone}</td>
-
-             
+      {/* ✅ Desktop Table */}
+      <div className="hidden md:block overflow-x-auto">
+        <table className="w-full border-collapse text-sm">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-3 border">Name</th>
+              <th className="p-3 border">Email</th>
+              <th className="p-3 border">Phone</th>
+              <th className="p-3 border">Department</th>
+              <th className="p-3 border">Gender</th>
+              <th className="p-3 border">Post</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((u, i) => (
+              <tr key={i} className="text-center hover:bg-orange-50">
+                <td className="p-3 border">{u.username}</td>
+                <td className="p-3 border break-all">{u.email}</td>
+                <td className="p-3 border">{u.phone}</td>
+                <td className="p-3 border">{u.department}</td>
+                <td className="p-3 border capitalize">{u.gender}</td>
+                <td className="p-3 border">{u.post}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* ✅ Mobile Card View */}
+      <div className="md:hidden space-y-4">
+        {users.map((u, i) => (
+          <div
+            key={i}
+            className="border rounded-lg p-4 shadow-sm bg-orange-50"
+          >
+            <p><span className="font-semibold">Name:</span> {u.username}</p>
+            <p className="break-all">
+              <span className="font-semibold">Email:</span> {u.email}
+            </p>
+            <p><span className="font-semibold">Phone:</span> {u.phone}</p>
+            <p><span className="font-semibold">Department:</span> {u.department}</p>
+            <p className="capitalize">
+              <span className="font-semibold">Gender:</span> {u.gender}
+            </p>
+            <p><span className="font-semibold">Post:</span> {u.post}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
+
 export default User;

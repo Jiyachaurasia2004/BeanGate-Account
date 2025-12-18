@@ -6,6 +6,7 @@ import { useContext } from "react";
 
 function Home() {
    const { isLoggedIn } =useContext(AuthContext);
+   
   return (
     <div className="h-screen relative overflow-hidden bg-gray-50">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -44,8 +45,6 @@ function Home() {
          
         </div>
       </nav>
-
-      {/* Main Content */}
       <div className="h-screen flex flex-col items-center justify-center container mx-auto px-4 relative z-10">
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-4xl md:text-5xl font-bold text-zinc-700 mb-4 text-center">

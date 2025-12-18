@@ -15,7 +15,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+    
     try {
       const response = await axios.post(
         `${serverUrl}/api/auth/login`,
@@ -24,6 +24,7 @@ function Login() {
 
       const data = response.data;
       alert(data.message);
+      localStorage.removeItem("loginAlertShown");
       storeTokenInLs(data.token);
       setEmail("");
       setPassword("");
