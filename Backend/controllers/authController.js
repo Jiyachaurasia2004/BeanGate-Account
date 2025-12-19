@@ -7,11 +7,20 @@ const wrapAsync = require("../utils/wrapAsync");
 const OTP = require("../models/otp");
 const sendEmail = require("../utils/sendEmail");
 
-
 require("dotenv").config();
 const registerUser = wrapAsync(async (req, res) => {
   try {
-    const { username, email,phone, password,department,post,gender,confirmPassword ,termsAccepted} = req.body;
+    const {
+      username,
+      email,
+      phone,
+      password,
+      department,
+      post,
+      gender,
+      confirmPassword,
+      termsAccepted,
+    } = req.body;
 
     const userExist = await User.findOne({ email });
     if (userExist) {
@@ -25,10 +34,11 @@ const registerUser = wrapAsync(async (req, res) => {
       email,
       phone,
       department,
-      gender,post,
+      gender,
+      post,
       password: hash_password,
       confirmPassword: hash_password,
-      termsAccepted
+      termsAccepted,
     });
 
     const token = generatejwt(userCreated._id);
@@ -50,7 +60,7 @@ const registerUser = wrapAsync(async (req, res) => {
         department: userCreated.department,
         post: userCreated.post,
         gender: userCreated.gender,
-         termsAccepted:userCreated.termsAccepted
+        termsAccepted: userCreated.termsAccepted,
       },
       token,
     });
@@ -102,85 +112,108 @@ const loginUser = wrapAsync(async (req, res) => {
   }
 });
 
-
-const handleForgetPassword = async(req,res)=>{
- try {
-   const {email} = req.body;
-
-   const user = await User.findOne({email});
-   if(!user){
-       res.status(404).json({msg:"User with this email does not exist"});
-       return;
-   }
-   const otp = Math.floor(100000 + Math.random() * 900000);
-   console.log("otp generate",otp);
-   const newOTP = new OTP({
-        otp:otp,
-        email:email
-   })
-   const message = `Your OTP for password reset is ${otp}. It is valid for 10 minutes. If you did not request this, please ignore this email.`;
-  
-   await sendEmail(email,"Password Reset OTP",message);
-   await newOTP.save();
-   res.status(200).json({success:true,message:"OTP sent to your email"});
-
- } catch (error) {
-    res.status(500).json({success:false,message:"internal error",error: error.message})
- }
-}
-
-const handleVerifyOTP = async(req,res)=>{
+const handleForgetPassword = async (req, res) => {
   try {
-    const {otp} = req.body;
+    const { email } = req.body;
 
-    const existingOTP = await OTP.findOne({otp:otp});
-    if(!existingOTP || Date.now() > existingOTP.createdAt.getTime() + 60*60*1000){
-        res.status(400).json({success:false,message:"Invalid OTP"});
-        return;
-    } 
-    res.status(200).json({success:true,message:"OTP verified successfully"});
+    const user = await User.findOne({ email });
+    if (!user) {
+      res.status(404).json({ msg: "User with this email does not exist" });
+      return;
+    }
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    console.log("otp generate", otp);
+    const newOTP = new OTP({
+      otp: otp,
+      email: email,
+    });
+    const message = `Your OTP for password reset is ${otp}. It is valid for 10 minutes. If you did not request this, please ignore this email.`;
+
+    await sendEmail(email, "Password Reset OTP", message);
+    await newOTP.save();
+    res.status(200).json({ success: true, message: "OTP sent to your email" });
   } catch (error) {
-      res.status(500).json({success:false,message:"internal error"})
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "internal error",
+        error: error.message,
+      });
   }
-}
+};
+
+const handleVerifyOTP = async (req, res) => {
+  try {
+    const { otp } = req.body;
+
+    const existingOTP = await OTP.findOne({ otp: otp });
+    if (
+      !existingOTP ||
+      Date.now() > existingOTP.createdAt.getTime() + 60 * 60 * 1000
+    ) {
+      res.status(400).json({ success: false, message: "Invalid OTP" });
+      return;
+    }
+    res
+      .status(200)
+      .json({ success: true, message: "OTP verified successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "internal error" });
+  }
+};
 
 const handleResetPassword = async (req, res) => {
   try {
     const { otp, newPassword, confirmPassword } = req.body;
 
+    if (!otp || !newPassword || !confirmPassword) {
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields required" });
+    }
+
     if (newPassword !== confirmPassword) {
-      return res.status(400).json({ success: false, message: "Passwords do not match" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Passwords do not match" });
     }
-    
-   const existingOTP = await OTP.findOne({ otp: Number(otp) }); 
-if (!existingOTP) {
-    return res.status(400).json({ success: false, message: "Invalid OTP" });
-}
 
-const isExpired = Date.now() > existingOTP.createdAt.getTime() + 10 * 60 * 1000;
-if (isExpired) {
-    await OTP.deleteOne({ _id: existingOTP._id });
-    return res.status(400).json({ success: false, message: "OTP expired" });
-}
-
-    const user = await User.findOne({ email: existingOTP.email });
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+    const existingOTP = await OTP.findOne({ otp: Number(otp) });
+    if (!existingOTP) {
+      return res.status(400).json({ success: false, message: "Invalid OTP" });
     }
-    user.password = await bcrypt.hash(newPassword, 8);
-    await user.save();
+
+    const isExpired =
+      Date.now() > existingOTP.createdAt.getTime() + 10 * 60 * 1000;
+    if (isExpired) {
+      await OTP.deleteOne({ _id: existingOTP._id });
+      return res.status(400).json({ success: false, message: "OTP expired" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await User.updateOne(
+      { email: existingOTP.email },
+      { password: hashedPassword }
+    );
 
     await OTP.deleteMany({ email: existingOTP.email });
-    res.status(200).json({ success: true, message: "Password reset successfully" });
+
+    return res.status(200).json({
+      success: true,
+      message: "Password reset successfully",
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.error("Reset password error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 
-
-
- const logout = async (req, res) => {
+const logout = async (req, res) => {
   try {
     res.clearCookie("token");
     return res.status(200).json({ message: "successfully logouts" });
@@ -190,4 +223,11 @@ if (isExpired) {
     return res.status(400).json({ message: "logout error" });
   }
 };
-module.exports = { registerUser, loginUser, handleForgetPassword,handleVerifyOTP,handleResetPassword,logout };
+module.exports = {
+  registerUser,
+  loginUser,
+  handleForgetPassword,
+  handleVerifyOTP,
+  handleResetPassword,
+  logout,
+};

@@ -68,7 +68,10 @@ const creditSchema = z.object({
 
   paidBy: z.string().optional(),
 
-  name: z.string().optional(),
+  name: z.string({ required_error: "Name is requried" })
+    .trim()
+    .min(3, "name should be at least 3 characters long")
+    .max(30, "name should be at most 30 characters long"),
 
   paymentMode: z.enum(["cash", "upi", "bank", "card"], {
     required_error: "Payment mode is required",

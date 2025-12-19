@@ -42,16 +42,16 @@ function Credit() {
         <table className="w-full border-collapse">
           <thead className="bg-gray-100 text-zinc-700">
             <tr>
-               <th className="p-3">Name</th>
-                <th className="p-3">Email</th>
-                 <th className="p-3">Phone No.</th>
+              <th className="p-3">Name</th>
+              <th className="p-3">Email</th>
+              <th className="p-3">Phone No.</th>
               <th className="p-3">Date</th>
               <th className="p-3">Voucher</th>
               <th className="p-3">Type</th>
               <th className="p-3">Description</th>
               <th className="p-3">Amount</th>
               <th className="p-3">Paid By</th>
-             
+
               <th className="p-3">Mode</th>
               <th className="p-3">Category</th>
               <th className="p-3">Remarks</th>
@@ -61,27 +61,23 @@ function Credit() {
 
           <tbody>
             {credits.map((item, index) => (
-
-              <tr
-                key={index}
-                className="text-center border-t hover:bg-gray-50"
-              >
-                  <td className="p-3">{item.name || "-"}</td>
-                      <td className="p-3">{item.email || "-"}</td>
-                        <td className="p-3">{item.phone || "-"}</td>
+              <tr key={index} className="text-center border-t hover:bg-gray-50">
+                <td className="p-3">{item.name || "-"}</td>
+                <td className="p-3">{item.email || "-"}</td>
+                <td className="p-3">{item.phone || "-"}</td>
                 <td className="p-3">
-                  {new Date(item.date).toLocaleDateString()}
+                  {new Date(item.date).toLocaleDateString("en-GB")}
                 </td>
-                 
+
                 <td className="p-3">{item.voucherNo || "-"}</td>
                 <td className="p-3 capitalize">{item.transactionType}</td>
                 <td className="p-3">{item.description}</td>
                 <td className="p-3 font-semibold">₹{item.amount}</td>
                 <td className="p-3">{item.paidBy || "-"}</td>
-             
+
                 <td className="p-3 uppercase">{item.paymentMode}</td>
                 <td className="p-3">{item.category}</td>
-                <td className="p-3">{item.remarks}</td>
+                <td className="p-3">{item.remarks || "-"}</td>
                 <td
                   className={`p-3 font-semibold ${
                     item.reimbursementStatus === "approved"
@@ -101,21 +97,15 @@ function Credit() {
 
       <div className="md:hidden space-y-4">
         {credits.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-xl shadow p-4 space-y-1"
-          >
-             <p>
-              <span className="font-semibold">Name:</span>{" "}
-              {item.name || "-"}
-            </p>
-             <p>
-              <span className="font-semibold">Email:</span>{" "}
-              {item.email || "-"}
+          <div key={index} className="bg-white rounded-xl shadow p-4 space-y-1">
+            <p>
+              <span className="font-semibold">Name:</span> {item.name || "-"}
             </p>
             <p>
-              <span className="font-semibold">Phone:</span>{" "}
-              {item.phone || "-"}
+              <span className="font-semibold">Email:</span> {item.email || "-"}
+            </p>
+            <p>
+              <span className="font-semibold">Phone:</span> {item.phone || "-"}
             </p>
             <p>
               <span className="font-semibold">Date:</span>{" "}
@@ -134,26 +124,23 @@ function Credit() {
               {item.description}
             </p>
             <div className="flex gap-2">
-                 <span className="font-semibold">Amount:</span>
-            <p className="font-bold text-lg"> ₹{item.amount}</p>
+              <span className="font-semibold">Amount:</span>
+              <p className="font-bold text-lg"> ₹{item.amount}</p>
             </div>
-           
+
             <p>
               <span className="font-semibold">Paid By:</span>{" "}
               {item.paidBy || "-"}
             </p>
-           
+
             <p>
-              <span className="font-semibold">Mode:</span>{" "}
-              {item.paymentMode}
+              <span className="font-semibold">Mode:</span> {item.paymentMode}
             </p>
             <p>
-              <span className="font-semibold">Category:</span>{" "}
-              {item.category}
+              <span className="font-semibold">Category:</span> {item.category}
             </p>
-             <p>
-              <span className="font-semibold">Remarks:</span>{" "}
-              {item.remarks}
+            <p>
+              <span className="font-semibold">Remarks:</span> {item.remarks}
             </p>
             <p
               className={`font-semibold ${

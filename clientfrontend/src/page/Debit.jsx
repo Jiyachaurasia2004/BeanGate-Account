@@ -4,11 +4,12 @@ import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
  function Debit() {
   const [agreedToTerms, setAgreedToTerms] = useState(false)
   const {serverUrl}  =useContext(AuthContext)
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -39,6 +40,7 @@ import { Link } from "react-router-dom";
         amount: "",
         from: ""
       });
+      navigate("/")
     } catch (error) {
       if (
         error.response &&

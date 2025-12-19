@@ -1,7 +1,7 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
-const jwt = require('jsonwebtoken');
-const User = require('../models/auth');
+const jwt = require("jsonwebtoken");
+const User = require("../models/auth");
 
 const auth = async (req, res, next) => {
   try {
@@ -25,7 +25,9 @@ const auth = async (req, res, next) => {
     console.log("Verified token:", verified);
 
     // 4️⃣ Find user in DB by ID (assuming token was signed with { id: user._id })
-    const userData = await User.findById(verified.id).select("-password -confirmPassword -__v");
+    const userData = await User.findById(verified.id).select(
+      "-password -confirmPassword -__v"
+    );
     console.log("User data:", userData);
 
     if (!userData) {
@@ -34,11 +36,14 @@ const auth = async (req, res, next) => {
 
     // 5️⃣ Attach to req object
     req.token = token;
-    req.user = userData;
+    req.user = {
+      _id: userData._id,
+      email: userData.email,
+      isAdmin: userData.isAdmin, // ✅ attach here
+    };
     req.userId = userData._id.toString();
 
     next();
-
   } catch (error) {
     console.log("Auth middleware error:", error);
     return res.status(401).json({ error: "Invalid token" });

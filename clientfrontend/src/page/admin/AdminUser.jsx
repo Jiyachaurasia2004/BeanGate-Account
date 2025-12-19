@@ -39,7 +39,7 @@ function User() {
         Admin User Data
       </h1>
 
-      {/* ✅ Desktop Table */}
+
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full border-collapse text-sm">
           <thead className="bg-gray-100">
@@ -67,7 +67,6 @@ function User() {
         </table>
       </div>
 
-      {/* ✅ Mobile Card View */}
       <div className="md:hidden space-y-4">
         {users.map((u, i) => (
           <div

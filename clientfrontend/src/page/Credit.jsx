@@ -66,6 +66,7 @@ function Credit() {
         reimbursementStatus: "pending",
         remarks: "",
       });
+      navigate("/")
     } catch (error) {
       toast.error("Error submitting transaction");
       console.log(error);
@@ -109,7 +110,8 @@ function Credit() {
             value={formData.name}
             onChange={handleChange}
             className="w-full mb-4 border border-orange-400 focus:outline-orange-500 px-2 py-2 rounded"
-          />
+           required
+         />
           <input
             type="text"
             name="description"

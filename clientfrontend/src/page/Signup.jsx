@@ -187,6 +187,8 @@ function Signup() {
             <option value="Manager">Manager</option>
             <option value="Developer">Developer</option>
             <option value="Executive">Executive</option>
+            <option value="CEO">CEO</option>
+            <option value="Director">Director</option>
           </select>
           <select
             name="department"
@@ -200,6 +202,7 @@ function Signup() {
             <option value="HR">HR</option>
             <option value="Sales">Sales</option>
             <option value="Accounts">Accounts</option>
+             <option value="Admin">Admin</option>
           </select>
           <input
             type="password"

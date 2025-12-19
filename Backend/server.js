@@ -11,7 +11,7 @@ const routerAuth = require("./routers/authRouter")
 const routerAdmin = require("./routers/adminRouter")
 const cookieParser = require("cookie-parser");
 app.use(cors({
-    origin: 'https://beangate-account-websitee.onrender.com', 
+    origin: 'http://localhost:5173', 
     credentials: true, 
       allowedHeaders: ["Authorization", "Content-Type"]
 }));
@@ -28,3 +28,5 @@ app.listen(PORT,()=>{
     connectDB();
     console.log(`Server is running on port ${PORT}`);
 })
+
+// https://beangate-account-websitee.onrender.com
