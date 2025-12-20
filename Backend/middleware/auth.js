@@ -35,12 +35,8 @@ const auth = async (req, res, next) => {
     }
 
     // 5️⃣ Attach to req object
-    req.token = token;
-    req.user = {
-      _id: userData._id,
-      email: userData.email,
-      isAdmin: userData.isAdmin, // ✅ attach here
-    };
+     req.token = token;
+    req.user = userData;
     req.userId = userData._id.toString();
 
     next();

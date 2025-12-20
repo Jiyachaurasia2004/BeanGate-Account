@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [user, setUser] = useState(null); // Example user state
-    const serverUrl = "https://beangate-account-backend.onrender.com"; // Your server URL
+    const serverUrl = "http://localhost:3000"; // Your server URL
 
     // Store token in localStorage and state
     const storeTokenInLs = (serverToken) => {
