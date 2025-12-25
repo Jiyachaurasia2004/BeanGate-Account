@@ -29,20 +29,24 @@ function Login() {
       setEmail("");
       setPassword("");
       navigate("/")
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.extraDetails
-      ) {
-        toast.error(error.response.data.extraDetails);
-      } else {
-        alert("Login failed. Please try again.");
-      }
-      console.error(error);
-    } finally {
+    }catch (error) {
+  if (error.response) {
+    const message = error.response.data?.extraDetails || error.response.data?.message;
+
+    if (message === "Invalid password" || message === "Password does not match") {
+      alert("Password does not match");
+
       setIsLoading(false);
+    } else {
+      toast.error(message || "Login failed");
     }
+  } else {
+    alert("Server error. Please try again later.");
+  }
+
+  console.error(error);
+}
+
   };
 
   return (

@@ -1,6 +1,8 @@
 const Credit = require("../models/credit");
 
 const creditFrom = async (req, res) => {
+   const user = req.user;    
+    const userId = req.userId;
   try {
     const {
       date,
@@ -18,6 +20,7 @@ const creditFrom = async (req, res) => {
     } = req.body;
 
     const newCredit = await Credit.create({
+       userId: userId,        
       date,
       voucherNo,
       transactionType,
@@ -35,6 +38,7 @@ const creditFrom = async (req, res) => {
       .status(200)
       .json({ message: "Credit form submitted successfully", newCredit });
   } catch (error) {
+      console.error(error); 
     res.status(500).json({ message: error });
   }
 };

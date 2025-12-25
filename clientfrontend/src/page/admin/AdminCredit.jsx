@@ -63,8 +63,9 @@ function Credit() {
             {credits.map((item, index) => (
               <tr key={index} className="text-center border-t hover:bg-gray-50">
                 <td className="p-3">{item.name || "-"}</td>
-                <td className="p-3">{item.email || "-"}</td>
-                <td className="p-3">{item.phone || "-"}</td>
+                <td className="p-3">{item.userId?.email || "-"}</td>
+                <td className="p-3">{item.userId?.phone || "-"}</td>
+
                 <td className="p-3">
                   {new Date(item.date).toLocaleDateString("en-GB")}
                 </td>
@@ -102,10 +103,10 @@ function Credit() {
               <span className="font-semibold">Name:</span> {item.name || "-"}
             </p>
             <p>
-              <span className="font-semibold">Email:</span> {item.email || "-"}
+              <span className="font-semibold">Email:</span> {item.userId?.email || "-"}
             </p>
             <p>
-              <span className="font-semibold">Phone:</span> {item.phone || "-"}
+              <span className="font-semibold">Phone:</span> {item.userId?.phone || "-"}
             </p>
             <p>
               <span className="font-semibold">Date:</span>{" "}

@@ -1,34 +1,67 @@
 "use client";
+
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
-function User() {
-  const [users, setUserData] = useState([]);
+function AdminUser() {
   const { serverUrl } = useContext(AuthContext);
 
-  const getAllUser = async () => {
-    try {
-      const result = await axios.get(`${serverUrl}/api/admin/user`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      setUserData(result.data.users);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getAllUser();
-  }, []);
+    if (!serverUrl) return;
 
-  if (!users || !localStorage.getItem("token")) {
+    const getAllUsers = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          setError("Please log in to view the user data.");
+          setLoading(false);
+          return;
+        }
+
+        const result = await axios.get(`${serverUrl}/api/admin/user`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log("API RESPONSE:", result.data);
+
+        // 🔥 EXACT FIX (message key)
+        setUsers(result.data?.message || []);
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError(err.response?.data?.error || "Failed to fetch users");
+        setUsers([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getAllUsers();
+  }, [serverUrl]);
+
+  // ⏳ Loading
+  if (loading) {
+    return (
+      <div className="text-center mt-20 text-xl text-zinc-700">
+        Loading users...
+      </div>
+    );
+  }
+
+  // ❌ Error
+  if (error) {
     return (
       <div className="text-center mt-20 text-xl text-red-600">
-        Please log in to view the user data.
+        {error}
       </div>
     );
   }
@@ -39,7 +72,7 @@ function User() {
         Admin User Data
       </h1>
 
-
+      {/* 🖥 Desktop Table */}
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full border-collapse text-sm">
           <thead className="bg-gray-100">
@@ -53,8 +86,8 @@ function User() {
             </tr>
           </thead>
           <tbody>
-            {users.map((u, i) => (
-              <tr key={i} className="text-center hover:bg-orange-50">
+            {users.map((u) => (
+              <tr key={u._id} className="text-center hover:bg-orange-50">
                 <td className="p-3 border">{u.username}</td>
                 <td className="p-3 border break-all">{u.email}</td>
                 <td className="p-3 border">{u.phone}</td>
@@ -67,10 +100,11 @@ function User() {
         </table>
       </div>
 
+      {/* 📱 Mobile Cards */}
       <div className="md:hidden space-y-4">
-        {users.map((u, i) => (
+        {users.map((u) => (
           <div
-            key={i}
+            key={u._id}
             className="border rounded-lg p-4 shadow-sm bg-orange-50"
           >
             <p><span className="font-semibold">Name:</span> {u.username}</p>
@@ -90,4 +124,4 @@ function User() {
   );
 }
 
-export default User;
+export default AdminUser;
